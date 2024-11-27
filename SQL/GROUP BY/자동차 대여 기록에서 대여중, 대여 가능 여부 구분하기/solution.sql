@@ -1,0 +1,15 @@
+-- 코드를 입력하세요
+SELECT
+    CAR_ID,
+    IF( EXISTS (
+        SELECT 1
+        FROM CAR_RENTAL_COMPANY_RENTAL_HISTORY AS SUB
+        WHERE 
+            MAIN.CAR_ID = SUB.CAR_ID AND
+            START_DATE <= "2022-10-16" AND
+            END_DATE >= "2022-10-16"
+    ), "대여중", "대여 가능")
+FROM CAR_RENTAL_COMPANY_RENTAL_HISTORY AS MAIN
+GROUP BY CAR_ID
+ORDER BY CAR_ID DESC
+;
