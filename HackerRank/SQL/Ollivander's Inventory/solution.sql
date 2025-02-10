@@ -1,0 +1,23 @@
+/*
+Enter your query here.
+*/
+SELECT
+    W.ID,
+    WP.AGE,
+    W.COINS_NEEDED,
+    W.POWER
+FROM WANDS W
+INNER JOIN WANDS_PROPERTY WP
+    ON W.CODE = WP.CODE
+WHERE IS_EVIL = 0
+    AND W.COINS_NEEDED = (
+        SELECT MIN(COINS_NEEDED)
+        FROM WANDS W2
+        INNER JOIN WANDS_PROPERTY WP2
+            ON W2.CODE = WP2.CODE
+        WHERE WP2.IS_EVIL = 0
+            AND W.POWER = W2.POWER
+            AND WP.AGE = WP2.AGE
+    )
+ORDER BY POWER DESC, AGE DESC
+;
