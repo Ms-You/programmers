@@ -1,0 +1,16 @@
+/*
+Enter your query here.
+*/
+DELIMITER $$
+CREATE PROCEDURE PRINTSTAR()
+BEGIN
+    DECLARE I INT DEFAULT 20;
+    WHILE I > 1 DO
+        SELECT REPEAT("* ", I);
+        SET I = I-1;
+    END WHILE;
+    SELECT ("*");
+END $$
+DELIMITER ;
+
+CALL PRINTSTAR();
