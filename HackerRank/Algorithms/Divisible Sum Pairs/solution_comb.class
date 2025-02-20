@@ -1,0 +1,82 @@
+import java.io.*;
+import java.math.*;
+import java.security.*;
+import java.text.*;
+import java.util.*;
+import java.util.concurrent.*;
+import java.util.function.*;
+import java.util.regex.*;
+import java.util.stream.*;
+import static java.util.stream.Collectors.joining;
+import static java.util.stream.Collectors.toList;
+
+class Result {
+
+    static List<Integer> combList = new ArrayList<>();
+    private static void comb(int start, int cnt, int[] selected, List<Integer> ar) {
+        if (cnt == 2) {
+            int sum = 0;
+            for (int i = 0; i < 2; i++) {
+                sum += selected[i];
+            }
+            combList.add(sum);
+            return;
+        }
+        
+        for (int i = start; i < ar.size(); i++) {
+            selected[cnt] = ar.get(i);
+            comb(i+1, cnt+1, selected, ar);
+        }
+    }
+
+    /*
+     * Complete the 'divisibleSumPairs' function below.
+     *
+     * The function is expected to return an INTEGER.
+     * The function accepts following parameters:
+     *  1. INTEGER n
+     *  2. INTEGER k
+     *  3. INTEGER_ARRAY ar
+     */
+    
+    public static int divisibleSumPairs(int n, int k, List<Integer> ar) {
+    // Write your code here
+        int count = 0;
+        
+        comb(0, 0, new int[2], ar);
+        
+        for (int combination : combList) {
+            if (combination % k == 0) {
+                count++;
+            }
+        }
+        
+        return count;
+    }
+
+}
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
+
+        String[] firstMultipleInput = bufferedReader.readLine().replaceAll("\\s+$", "").split(" ");
+
+        int n = Integer.parseInt(firstMultipleInput[0]);
+
+        int k = Integer.parseInt(firstMultipleInput[1]);
+
+        List<Integer> ar = Stream.of(bufferedReader.readLine().replaceAll("\\s+$", "").split(" "))
+            .map(Integer::parseInt)
+            .collect(toList());
+
+        int result = Result.divisibleSumPairs(n, k, ar);
+
+        bufferedWriter.write(String.valueOf(result));
+        bufferedWriter.newLine();
+
+        bufferedReader.close();
+        bufferedWriter.close();
+    }
+}
