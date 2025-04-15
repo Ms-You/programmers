@@ -1,0 +1,11 @@
+# Write your MySQL query statement below
+SELECT NAME
+FROM (
+    SELECT E1.ID, E1.NAME
+    FROM EMPLOYEE E1
+    INNER JOIN EMPLOYEE E2
+        ON E1.ID = E2.MANAGERID
+    GROUP BY E1.ID, E1.NAME
+    HAVING COUNT(E1.ID) >= 5
+) AS SUB
+;
