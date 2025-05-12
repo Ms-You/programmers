@@ -1,0 +1,8 @@
+# Write your MySQL query statement below
+SELECT
+    USER_ID,
+    MAX(TIME_STAMP) AS LAST_STAMP
+FROM LOGINS
+WHERE TIME_STAMP LIKE "2020%"
+GROUP BY USER_ID
+;
